@@ -12,18 +12,30 @@
 </head>
 <body>
     <div id="app">
-        <!-- 1、 v-cloak能够解决插值表达式闪烁问题-->
+        <!-- 1、 v-cloak-->
+        <!-- 能够解决插值表达式闪烁问题 -->
         <!-- 并且不会覆盖插值表达式以外的内容 -->
         <p v-cloak>+++++{{msg}}+++++++++</p>
 
-        <!-- 2、v-text默认没有闪烁问题 -->
+        <!-- 2、v-text -->
+        <!-- 默认没有闪烁问题 -->
         <!-- 会覆盖元素中原有的内容 -->
         <p v-text="msg">++++++++++</p>
 
-        <!-- 3、 v-html用于转换字符串标签、并会覆盖原来的内容-->
+        <!-- 3、 v-html-->
+        <!-- 用于转换字符串标签、并会覆盖原来的内容 -->
         <!-- v-text无法转换标签-->
         <div v-text="msg2">++++++++</div>
         <div v-html="msg2">+++++++++</div>
+
+        <!-- 4、v-bind -->
+        <!-- 提供用于绑定属性的指令 -->
+        <input type="button" value="按钮" title="123">
+        <input type="button" value="按钮" v-bind:title="mytitle">
+        <!-- v-bind可以简写为: + 属性 -->
+        <input type="button" value="按钮" :title="mytitle">
+        <!-- v-bind中，可以写合法的js表达式 -->
+        <input type="button" value="按钮" v-bind:title="mytitle + '123'">
     </div>
 </body>
 <script>
@@ -31,7 +43,8 @@
         el:'#app',
         data:{
             msg:'123',
-            msg2:'<h1>我是一个标签</h1>'
+            msg2:'<h1>我是一个标签</h1>',
+            mytitle:'我的标题'
         }
     });
 </script>
