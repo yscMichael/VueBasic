@@ -44,8 +44,10 @@
         <!-- 5、 v-on -->
         <!-- 用来绑定事件 -->
         <input type="button" value="v-on" v-on:click="show">
-        <!-- v-on会把click中的内容当作一个变量去找，你写一个函数，它不认识 -->
+        <!-- 缩写形式 -->   
+        <input type="button" value="v-on" @click="show">
 
+        <!-- v-on会把click中的内容当作一个变量去找，你写一个函数，它不认识 -->
         <!-- 这个会报错 -->
         <!-- <input type="button" value="v-on" v-on:click="alert('hello')"> -->
 
