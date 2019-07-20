@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <style>
+        .inner{
+            height: 150px;
+            background-color: darkcyan;
+        }
+        .outer{
+            padding: 40px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 1、正常情况 -->
+        <!-- 点击子控件的话，事件会传递到父组件，父组件的点击事件也会响应；简称冒泡 -->
+        <!-- <div class="inner" @click="divClick">
+            <input type="button" value="按钮" @click="btnClick">
+        </div> -->
+
+        <!-- 2、stop阻止事件冒泡 -->
+        <!-- 用在谁身上、谁的事件就不能冒泡、扼杀在摇篮里 -->
+        <!-- <div class="inner" @click="divClick">
+            <input type="button" value="按钮" @click.stop="btnClick">
+        </div> -->
+
+        <!-- 3、prevent阻止默认事件 -->
+        <!-- 这里点击链接不会去百度界面 -->
+        <!-- <a href="http://www.baidu.com" @click.prevent="linkClick">百度一下</a> -->
+
+        <!-- 4、capture事件捕获机制 -->
+        <!-- 简单理解就是将原来的冒泡事件顺序改变了；-->
+        <!-- 当点击内部子控件时，事件从外向里开始传播 -->
+        <!-- <div class="inner" @click.capture="divClick">
+            <input type="button" value="按钮" @click="btnClick">
+        </div> -->
+
+        <!-- 5、.self  -->
+        <!-- 阻止别的事件对其影响，只接受点击自己到事件 -->
+        <!-- <div class="inner" @click.self="divClick">
+            <input type="button" value="按钮" @click="btnClick">
+        </div> -->
+
+        <!-- 6、.once事件只触发一次 -->
+        <!-- 简单来说，再次点击，就没有反应了 -->
+        <div class="inner" @click.once="divClick">
+            <input type="button" value="按钮" @click="btnClick">
+        </div>
+
+        <!-- 7、总结self和stop区别 -->
+        <!-- self只会阻止自己不受别的事件影响、不能阻止其它控件是否受影响 -->
+        <!-- stop阻止自己不对其它控件造成影响 -->
+
+    </div>
+</body>
+<script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            methods:{
+                divClick:function(){
+                    console.log('点击Div');
+                },
+                btnClick:function(){
+                    console.log('点击btn');
+                },
+                linkClick:function(){
+                    console.log('百度一下');
+                }
+            }
+        });
+    </script>
+</html>
