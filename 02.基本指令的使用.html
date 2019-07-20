@@ -16,26 +16,42 @@
         <!-- 能够解决插值表达式闪烁问题 -->
         <!-- 并且不会覆盖插值表达式以外的内容 -->
         <p v-cloak>+++++{{msg}}+++++++++</p>
+        <hr/>
 
         <!-- 2、v-text -->
         <!-- 默认没有闪烁问题 -->
         <!-- 会覆盖元素中原有的内容 -->
         <p v-text="msg">++++++++++</p>
+        <hr/>
 
         <!-- 3、 v-html-->
         <!-- 用于转换字符串标签、并会覆盖原来的内容 -->
         <!-- v-text无法转换标签-->
         <div v-text="msg2">++++++++</div>
         <div v-html="msg2">+++++++++</div>
+        <hr/>
 
         <!-- 4、v-bind -->
         <!-- 提供用于绑定属性的指令 -->
-        <input type="button" value="按钮" title="123">
-        <input type="button" value="按钮" v-bind:title="mytitle">
+        <input type="button" value="v-bind" title="123">
+        <input type="button" value="v-bind" v-bind:title="mytitle">
         <!-- v-bind可以简写为: + 属性 -->
-        <input type="button" value="按钮" :title="mytitle">
+        <input type="button" value="v-bind" :title="mytitle">
         <!-- v-bind中，可以写合法的js表达式 -->
-        <input type="button" value="按钮" v-bind:title="mytitle + '123'">
+        <input type="button" value="v-bind" v-bind:title="mytitle + '123'">
+        <hr/>
+
+        <!-- 5、 v-on -->
+        <!-- 用来绑定事件 -->
+        <input type="button" value="v-on" v-on:click="show">
+        <!-- v-on会把click中的内容当作一个变量去找，你写一个函数，它不认识 -->
+
+        <!-- 这个会报错 -->
+        <!-- <input type="button" value="v-on" v-on:click="alert('hello')"> -->
+
+        <!-- 其它事件 -->
+        <!-- 鼠标覆盖事件 -->
+        <input type="button" value="v-on" v-on:mouseover="show">
     </div>
 </body>
 <script>
@@ -45,6 +61,11 @@
             msg:'123',
             msg2:'<h1>我是一个标签</h1>',
             mytitle:'我的标题'
+        },
+        methods:{ //这个methods属性定义了当前Vue实例所有可用的方法
+            show:function(){
+                alert('hello');
+            }
         }
     });
 </script>
