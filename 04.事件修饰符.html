@@ -61,21 +61,21 @@
     </div>
 </body>
 <script>
-        var vm = new Vue({
-            el: '#app',
-            data: {
+    var vm = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods:{
+            divClick:function(){
+                console.log('点击Div');
             },
-            methods:{
-                divClick:function(){
-                    console.log('点击Div');
-                },
-                btnClick:function(){
-                    console.log('点击btn');
-                },
-                linkClick:function(){
-                    console.log('百度一下');
-                }
+            btnClick:function(){
+                console.log('点击btn');
+            },
+            linkClick:function(){
+                console.log('百度一下');
             }
-        });
-    </script>
+        }
+    });
+</script>
 </html>
