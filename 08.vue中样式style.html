@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 1、基本使用方法 -->
+        <!-- 注意如果属性使用对象时，对象的键值key包含-，则这个key必须添加单引号-->
+        <h4 :style="{color: 'red', 'font-weight': 200}">我是标题-----</h4>
+
+        <!-- 2、绑定变量 -->
+        <h4 :style="firstObject">我是标题-----</h4>
+
+        <!-- 3、绑定多个变量 -->
+        <h4 :style="[firstObject, secondObject]">我是标题-----</h4>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            firstObject:{color: 'red', 'font-weight': 200},
+            secondObject:{'font-style':'italic'}
+        },
+        methods:{
+
+        }
+    });
+</script>
+</html>
