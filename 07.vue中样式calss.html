@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <style>
+        .red{
+            color: red;
+        }
+
+        .thin{
+            font-weight: 200;
+        }
+
+        .italic{
+            font-style: italic;
+        }
+
+        .active{
+            letter-spacing: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 1、基本class使用方法 -->
+        <h1 class="red thin">这是一个h1</h1>
+        <hr/>
+
+        <!-- 2、数组 -->
+        <!-- 2.1、数组基本使用方法 -->
+        <!-- 这里的class需要使用v-bind做数据绑定 -->
+        <!-- 这里需要注意的是：如果使用v-bind,则class里面的内容至少必须添加单引号 -->
+        <!-- 如果不添加单引号，会将里面的内容当成一个变量，从而在vm实例中找不到，会报错 -->
+        <!-- 从而得出结论：在vue中不添加任何符号，又想合法的，只有变量和表达式(函数不能直接使用) -->
+
+        <!-- 错误写法,会把red当成一个变量、但是没有这个变量，所以报错 -->
+        <!-- <h1 :class="red">这是一个h1</h1> -->
+
+        <!-- 正确写法 -->
+        <!-- <h1 :class="'red'">这是一个h1</h1> -->
+
+        <!-- 由上可知,数组中的元素必须添加单引号 -->
+        <h1 :class="['thin','italic']">这是一个h1</h1>
+        <hr/>
+
+        <!-- 2.2、数组中使用三元表达式 -->
+        <h1 :class="['thin','italic',flag?'active':'']">这是一个h1</h1>    
+        <hr/>
+
+        <!-- 2.3、数组中使用对象代替三元表达式 -->
+        <h1 :class="['thin','italic',{'active' : flag}]">这是一个h1</h1>
+        <hr/>
+
+        <!-- 3、使用对象 -->
+        <!-- 注意这里的属性可以加单引号，也可以不加单引号 -->
+        <h1 :class="{red: true, thin: true, italic: true, active: true}">这是一个h1</h1>
+        <!-- 简写方式如下: -->
+        <!-- 这里不用添加单引号、因为有这个变量 -->
+        <h1 :class="classObject">这是一个h1</h1>
+    </div>
+</body>
+<script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag:true,
+                classObject:{red: true, thin: true, italic: true, active: true}
+            },
+            methods:{
+            }
+        });
+    </script>
+</html>
