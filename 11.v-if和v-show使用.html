@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 总结: -->
+        <!-- 1、v-if每次都会重新删除或创建元素 -->
+        <!-- 2、v-show每次不会重新删除或创建、只是切换了元素的 display:none样式-->
+        <!-- 3、v-if有着比v-show更高的性能消耗 -->
+        <!-- 4、如果元素频繁显示或隐藏，最好用v-show -->
+        <!-- 5、如果元素只显示一次，以后不会显示给用户看，最好用v-show -->
+        <input type="button" value="change" @click="toggle">
+        <h3 v-if="flag">这是一个v-if控制的元素</h3>
+        <h3 v-if="flag">这是一个v-show控制的元素</h3>
+    </div>
+</body>
+<script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag:true,
+            },
+            methods:{
+                toggle(){
+                    this.flag = !this.flag;
+                }
+            }
+        });
+</script>
+</html>

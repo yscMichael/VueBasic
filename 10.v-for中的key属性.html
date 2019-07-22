@@ -34,26 +34,26 @@
     </div>      
 </body>
 <script>
-        var vm = new Vue({
-            el: '#app',
-            data: {
-                id:'',
-                name:'',
-                list:[
-                    {id:1, name:'one'},
-                    {id:2, name:'two'},
-                    {id:3, name:'three'},
-                    {id:4, name:'four'},
-                ]
-            },
-            methods:{
-                add(){ //添加方法
-                    // 在顶部添加
-                    this.list.unshift({id: this.id, name:this.name});
-                    //在底部添加
-                    // this.list.push({id:this.id, name:this.name});
-                }
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            id:'',
+            name:'',
+            list:[
+                {id:1, name:'one'},
+                {id:2, name:'two'},
+                {id:3, name:'three'},
+                {id:4, name:'four'},
+            ]
+        },
+        methods:{
+            add(){ //添加方法
+                // 在顶部添加
+                this.list.unshift({id: this.id, name:this.name});
+                //在底部添加
+                // this.list.push({id:this.id, name:this.name});
             }
-        });
-    </script>
+        }
+    });
+</script>
 </html>
