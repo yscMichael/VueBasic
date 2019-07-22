@@ -8,16 +8,51 @@
     <script src="./lib/vue-2.6.10.js"></script>
 </head>
 <body>
+    <!-- 这里主要是分析v-for指令中key的重要性 -->
+    <!-- 1、在循环中，如果出现问题，首先看是否指定了key -->
+    <!-- 2、key必须是唯一的，能够区别于其它项 -->
+    <!-- 3、key必须是字符串或数字 -->
+    <!-- 4、key必须使用v-bind进行绑定 -->
     <div id="app">
-        
+        <!-- 顶部添加框 -->
+        <div>
+            <label>Id:
+                <input type="text" v-model="id">
+            </label>
+
+            <label>Name:
+                <input type="text" v-model="name">
+            </label>
+
+            <input type="button" value="添加" @click="add">
+        </div>
+        <!-- 遍历循环列表 -->
+        <!-- 这里如果不加key、选中某一项，再添加新项目，会发现选中项目错乱 -->
+        <p v-for="item in list" :key="item.id">
+            <input type="checkbox">{{item.id}} --- {{item.name}}
+        </p>
     </div>      
 </body>
 <script>
         var vm = new Vue({
             el: '#app',
             data: {
+                id:'',
+                name:'',
+                list:[
+                    {id:1, name:'one'},
+                    {id:2, name:'two'},
+                    {id:3, name:'three'},
+                    {id:4, name:'four'},
+                ]
             },
             methods:{
+                add(){ //添加方法
+                    // 在顶部添加
+                    this.list.unshift({id: this.id, name:this.name});
+                    //在底部添加
+                    // this.list.push({id:this.id, name:this.name});
+                }
             }
         });
     </script>
