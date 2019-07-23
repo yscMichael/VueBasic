@@ -26,7 +26,7 @@
                 <!-- 名称 -->
                 <label>
                     Name:
-                    <input type="text" class="form-control" v-model="name" @keyup.f2="add">
+                    <input type="text" class="form-control" v-model="name">
                 </label>
                 <!-- 添加按钮 -->
                 <input type="button" value="添加" class="btn btn-primary" @click="add()">
@@ -35,7 +35,7 @@
                 <!-- 所有涉及到keywords的地方，都会重新刷新 -->
                 <label>
                     搜索名称关键字:
-                    <input type="text" class="form-control" v-model="keywords">
+                    <input type="text" class="form-control" v-model="keywords" v-focus>
                 </label>
             </div>
         </div>
@@ -61,15 +61,57 @@
             </tbody>
         </table>
     </div>
+
+    <!-- 要想使用Vue的指令、一定要创建Vue实例，否则不会生效的 -->
+    <div id=app2>
+        <h3 v-color="'pink'" v-fontweight="900">我是才是color自定义指令的</h3>
+    </div>
 </body>
 <script>
-    // 业务要求：输入完成后，点击回车键，调用add方法，刷新列表
-    // 这个时候会用到keyup事件，这里问题是：用什么来触发这个事件
-    // 自定义全局按钮修饰符
-    // 参考资料:(js 里面的键盘事件对应的键码)http://www.cnblogs.com/wuhua1/p/6686237.html
-    // 在Mac上面有时候有些键盘码被占用了，不会生效，谨记。
-    Vue.config.keyCodes.f2 = 13;//输入完成，点击回车，会刷新列表
+    // 全局自定义指令
+    // Vue.directive(param1,param2,...) 
+    // param1:指令的名称;在定义的时候，指令名称前面，不需要加 v- 前缀
+    //        但是在调用的时候必须在指令前面加上 v- 前缀进行调用
+    // param2: 是一个对象，在这个对象上，有一些指令相关的函数，这些函数可以在特定阶段，执行相关操作
 
+    // 1、业务需求：文本框进来选中(变相操作DOM类)
+    Vue.directive('focus',{
+        // 每当指令绑定到元素时，会立即执行这个bind函数，【只执行一次】
+        // 注意：在每个函数中，第一个参数永远是el:表示绑定指令的那个元素,这个el是原生JS对象
+        bind: function (el) {
+            // 在元素刚绑定指令的时候，此时元素还没有插入到DOM中，这个时候调用 focus 方法没有作用
+            // 因为一个元素，只有插入DOM之后，才能获取焦点。
+            // 所以el.focus()不会生效。
+            // el.focus();   
+        },
+        // 元素插入DOM后，会执行inserted函数，【执行1次】
+        inserted:function (el) {
+            // 和js行为相关的操作，最好在inserted中进行
+            el.focus();
+        },
+        // 当VNode更新的时候，会执行updated，可能会执行多次
+        updated:function(el){
+
+        }
+    });
+
+    //2、业务需求：自定义一个设置颜色的指令(操作样式类)
+    Vue.directive('color',{
+        // 这里是给元素添加样式，此时不必管元素是否已经插入到DOM中去，这个元素肯定有一个内联样式
+        // 我们在bind中给它新添加样式，将来元素显示到界面上，浏览器必然会解析这个样式
+        // 所以不必在inserted中操作样式，在bind操作就可以了。
+        bind:function(el,param){
+            // 注意：和样式操作相关的，一般都在bind中执行操作
+            el.style.color = param.value
+        },
+    });
+
+    // 3、自定义私有指令
+    // 类似于私有过滤器一样，这里定义的私有指令，只有绑定的VM实例的区域才可以使用
+    // 这里用到的是directives
+    // 定义形式就是:'自定义指令名称' + 对象
+    // 不同于过滤器的:'过滤器名称' + 函数
+    
     var vm = new Vue({
         el: '#app',
         data: {
@@ -131,6 +173,21 @@
                         return item;
                     }
                 });
+            }
+        }
+    });
+
+    // 监听app2
+    var vm2 = new Vue({
+        el: '#app2',
+        data:{
+            
+        },
+        directives:{
+            'fontweight':{
+                bind:function(el, binding){
+                    el.style.fontWeight = binding.value;
+                }
             }
         }
     });
