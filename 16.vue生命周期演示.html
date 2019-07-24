@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="修改msg" @click="msg='No'">
+        <h3 id="h3">{{ msg }}</h3>
+    </div>
+</body>
+<script>
+    // 创建Vue实例、得到ViewModel
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg:'ok'
+        },
+        methods:{
+            show(){
+                console.log('执行了show方法');
+            }
+        },
+        //以下是生命周期方法
+
+        // 1.这是第一个生命周期函数、
+        // 表示实例被完全创建出来之前，会执行它
+        beforeCreate() {
+            // 在当前函数中，data和methods中的数据还没有被初始化，不可以使用
+            //console.log(this.msg);
+            //this.show();
+        },
+        // 2.这是第二个生命周期函数
+        created() {
+           // 在当前函数中，data和methods方法都已经初始化好了
+           // 如果要调用methods中的方法，或者操作data中的数据，最早只能在created操作
+           // console.log(this.msg); 
+           // this.show();
+        },
+        // 3、这是第三个生命周期函数
+        // 此时模版已经在内存中编辑完成，但是尚未把模版渲染到界面中
+        beforeMount() {
+            // 在当前函数中，页面中的元素，还没有被真正替换过来，只是之前写的一些模版字符串
+            // console.log(document.getElementById('h3').innerText);
+        },
+        // 4.这是第四个生命周期函数
+        // 此时内存中的模版，已经真实的挂载到页面中，用户已经可以看到渲染好的界面
+        mounted() {
+            //至此，VM实例完成创建。此时她就静静的躺在内存中，等着被使用
+            //console.log(document.getElementById('h3').innerText);    
+        },
+
+        // 5.这个是程序运行中的事件
+        // 这个时候我们的界面还没有被更新、但是数据已经被更新了
+        beforeUpdate() {
+            // 此函数中页面是旧的，但是data数据是最新的，页面尚未和最新的数据保持同步
+            // console.log(document.getElementById('h3').innerText);
+            // console.log(this.msg);
+        },
+        // 6.这个时候，页面和data数据保持同步了，都是最新的
+        updated() {
+            console.log(document.getElementById('h3').innerText);
+            console.log(this.msg);
+        },
+
+    });
+</script>
+</html>
