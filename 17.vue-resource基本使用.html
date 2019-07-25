@@ -8,6 +8,8 @@
     <script src="./lib/vue-2.6.10.js"></script>
     <!-- vue-resource依赖于Vue，所以先后顺序要注意-->
     <script src="./lib/vue-resource-1.5.1.js"></script>
+    <!-- MD5加密 -->
+    <script src="./lib/md5.js"></script>
 </head>
 <body>
     <div id="app">
@@ -17,21 +19,68 @@
     </div>
 </body>
 <script>
+    // vue-resource参考网址：
+    // https://github.com/pagekit/vue-resource/tree/fe268fa1d6053ede5f34aef9a11e1a424a70446c/docs
+    // https://www.runoob.com/vue2/vuejs-ajax.html
+
+    // 1、配置全局网络请求的根域名
+    //使用这个官方文档特别说明：the path of the request must be relative.
+    //意思是请求的url里面不能有/
+    Vue.http.options.root = 'http://jqapi.hao1bao.com';
+
+    //2、如果服务器不能响应application/json、则设置请求为application/x-www-form-urlencoded
+    // Vue.http.options.emulateJSON = true;
+
+    //3、get请求与post请求、参数样式不同
+    //3.1、get请求，必须添加params
+    // this.$http.get('url',{params: jsonData})
+    //3.2、post请求、这里参数无需添加params、需要添加{emulateJSON:true}
+    //{emulateJSON:true}相当于application/x-www-form-urlencoded
+    //this.$http.post('url',jsonData,{emulateJSON:true});
+
     // 创建Vue实例
     var vm = new Vue({
         el: '#app',
         data: {
+            // get请求参数<好医宝登陆接口>
+            getParam:{
+                op:'Login',
+                subname:'gmi',
+                username:'lxr001',
+                password:md5('123456'),
+                push_channel:'',
+                appos:'2',
+                appver:'1.1.0',
+                _type:'json'
+            },
+            // post请求参数<好医宝资讯列表接口>
+            postParam:{
+                _password:md5('123456'),
+                _type:'json',
+                _userid:'1000639',
+                info_type:'0',
+                op:'Page',
+                cloud:'notice_news[head]'
+            }
         },
         methods:{
             // get请求
             getInfo(){
-                this.$http.get()
+                console.log(this.getParam);
+                this.$http.get('sys',{params: this.getParam}).then(function(result){
+                    // result.body是服务器返回的数据
+                    console.log(result.body);
+                });
             },
             // post请求
             postInfo(){
-
+                this.$http.post('app',this.postParam,{emulateJSON: true}).then(function(result){
+                     // result.body是服务器返回的数据
+                     console.log(result.body);
+                });
             },
             // 发起jsonp请求
+            // 主要用于跨域、暂时用不到
             jsonpInfo(){
 
             }
