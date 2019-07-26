@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <!-- 网络请求 -->
+    <script src="./lib/axios.js"></script>
+    <!-- 字符串解析 -->
+    <script src="./lib/qs.js"></script>
+    <!-- MD5加密 -->
+    <script src="./lib/md5.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="get请求" @click="getInfo">
+        <input type="button" value="post请求" @click="postInfo">
+    </div>
+</body>
+<script>
+    // 这里对比vue-resource进行基本使用
+
+    // axios参考网址:
+    // https://www.npmjs.com/package/axios
+    // https://www.kancloud.cn/yunye/axios/234845
+
+    // 1、配置全局网络请求根域名
+    axios.defaults.baseURL = 'http://jqapi.hao1bao.com';
+
+    // 2、application/x-www-form-urlencoded特殊设置
+    //post请求设置表单提交
+    //这里需要需要特别注意、axios默认是application/json、此时正常传递参数就可以了
+    //但是如果使用application/x-www-form-urlencoded形式，参数拼接就要特别注意了
+    //这里需要用qs.stringify()对参数进一步加工(原因：https://github.com/axios/axios#browser)
+    //window.Qs.stringify(this.postParam)
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+    //3、qs.stringify() 和JSON.stringify()的区别
+    //例题：var a = {name:'hehe',age:10};
+    //qs.stringify() => name=hehe&age=10
+    //JSON.stringify => "{"a":"hehe","age":10}"
+
+    // 创建Vue实例
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            // get请求参数<好医宝登陆接口>
+            getParam:{
+                op:'Login',
+                subname:'gmi',
+                username:'lxr001',
+                password:md5('123456'),
+                push_channel:'',
+                appos:'2',
+                appver:'1.1.0',
+                _type:'json'
+            },
+            // post请求参数<好医宝资讯列表接口>
+            postParam:{
+                _password:md5('123456'),
+                _type:'json',
+                _userid:'1000639',
+                info_type:'0',
+                op:'Page',
+                cloud:'notice_news[head]'
+            }
+        },
+        methods:{
+            // get请求
+            getInfo(){
+                axios.get('sys',{params : this.getParam}).then(function(response){
+                    // 正常返回结果
+                    console.log('正常返回结果');
+                    console.log(response.data);
+                })
+                .catch(function(error){
+                    // 网络请求错误
+                    console.log('网络请求错误');
+                    console.log(error);
+                })  
+                .finally(function(){
+                    // 总会执行的
+                    console.log('总会执行的');
+                });
+            },
+            // post请求
+            postInfo(){
+                axios.post('app',window.Qs.stringify(this.postParam)).then(function(response){
+                    // 正常返回结果
+                    console.log('正常返回结果');
+                    console.log(response.data);
+                })
+                .catch(function(){
+                    // 网络请求错误
+                    console.log('网络请求错误');
+                    console.log(error);
+                })
+                .finally(function(){
+                    // 总会执行的
+                    console.log('总会执行的');
+                });
+            },
+        }, 
+    });
+</script>
+</html>
