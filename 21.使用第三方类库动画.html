@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <link rel="stylesheet" href="./lib/animate.css">
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click="flag=!flag">
+        <!-- 1、使用enter-active-class和leave-active-class可以引用第三方库 -->
+        <!-- <transition enter-active-class="animated bounceIn"
+                    leave-active-class="animated bounceOut">
+            <h3 v-if='flag'>这是一个h3</h3>
+        </transition> -->
+
+        <!-- 2、 使用duration设置动画时长-->
+        <!-- <transition enter-active-class="bounceIn"
+                    leave-active-class="bounceOut"
+                    :duration="200">
+            <h3 v-if='flag' class="animated">这是一个h3</h3>
+        </transition> -->
+
+        <!-- 3、分别设置入场时长和离场时长 -->
+        <!-- <transition enter-active-class="bounceIn"
+                    leave-active-class="bounceOut"
+                    :duration="{enter:200, leave:4000}">
+            <h3 v-if="flag" class="animated">这是一个h3</h3>
+        </transition> -->
+
+        <!-- 4、自己添加一个实例 -->
+        <transition enter-active-class="animated tada"
+                    leave-active-class="animated bounceOutRight">
+            <h3 v-if="flag">hello</h3>
+        </transition>
+
+    </div>
+</body>
+<script>
+    // 创建Vue实例
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            flag: true
+        },
+        methods:{
+        }, 
+    });
+</script>
+</html>
