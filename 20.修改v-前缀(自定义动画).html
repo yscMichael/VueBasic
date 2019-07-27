@@ -7,32 +7,30 @@
     <title>Document</title>
     <script src="./lib/vue-2.6.10.js"></script>
     <style>
-        /* 此时与平常动画理解不太一样 */
-        /* 小结：进场动画，与想象的相反；退场动画与实际相同 */
-
+        /* 自定义动画名称 */
         /*【过渡开始】、此时元素将要显示*/
-        /* 刚进来、元素立马向右平移150px(注意是马上)*/
-        .v-enter{
+        /* 刚进来、元素立马向下平移150px(注意是马上)*/
+        .my-enter{
             opacity: 0;
-            transform: translateX(150px);
+            transform: translateY(150px);
         }
         /* 进场动画阶段效果 */
         /* 此时元素最终回到初始位置0px(回归原位)*/
-        .v-enter-active{
+        .my-enter-active{
             transition: all 3s ease;
         }
 
         /*【过渡结束】、此时元素将要隐藏*/
-        /* 将要离场、元素将向右平移50px(注意不是马上) */
-        .v-leave-to{
+        /* 将要离场、元素将向下平移50px(注意不是马上) */
+        .my-leave-to{
             opacity: 0;
-            transform: translateX(50px);
+            transform: translateY(50px);
         }
         /* 退场动画阶段效果 */
         /* 此时元素最终回到50px位置(回到50px) */
-        .v-leave-active{
+        .my-leave-active{
             transition: all 3s ease;
-        }
+        } 
     </style>
 </head>
 <body>
@@ -42,13 +40,10 @@
         <!-- <h3 v-if="flag">这是一个H3</h3> -->
 
         <!-- 2、使用过渡类名进行动画、在style中进行定义的 -->
-        <!-- 2.1、然后用transition元素包裹目标元素 -->
-        <!-- 2.2、这里要想让h3标签动起来，还需要使用v-if，
-            原因就是只有DOM元素插入、更新或移除时才会触发过度类(上面4个) -->
-        <!-- 综上所述：要想实现过渡动画、必须具备三个条件：transition、过渡类名、v-if(要能显示或隐藏) -->
-        <transition>
+        <!-- 这里唯一不同的是：需要添加自定义名称 -->
+        <transition name='my'>
             <h3 id="h3" v-if='flag'>这是一个H3</h3>
-        </transition>
+        </transition> 
     </div>
 </body>
 <script>
@@ -59,12 +54,6 @@
             flag: true
         },
         methods:{
-            //演示正常动画
-            changeFlag(){
-                var el = document.getElementById('h3');
-                el.style.transform = 'translateX(' + 150 + 'px)'
-                el.style.transition = 'all 10s ease 0s';
-            }
         }, 
     });
 </script>
