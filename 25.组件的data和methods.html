@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+<body>
+   <div id="app">
+        <mycom1></mycom1>
+   </div> 
+</body>
+<script>    
+    // 1.组件可以有自己的data数据
+    // 2.组件的data和实例的data有点不一样，实例的data可以是一个对象，但是组件的data必须是一个方法
+    // 3.组件的data必须是一个方法之外，这个方法内部必须返回一个对象
+    // 4.组件中的data数据，使用方式和实例data一样。
+    // 备注：为什么组件中的data必须返回一个对象
+    // 原因：组件的data必须相互独立，不能相互影响，使用这种方式，会开辟新的内存空间
+
+    Vue.component('mycom1',{
+        template:'<h1>这是一个h1 --- {{msg}}</h1>',
+        data:function(){
+            return {
+                msg:'这是组件的data数据'
+            }
+        }
+    });
+
+    // 创建Vue实例
+    var vm = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods:{
+        }, 
+        components:{
+        }
+    });
+</script>
+</html>

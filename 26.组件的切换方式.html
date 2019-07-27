@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <style>
+        .v-enter{
+            opacity: 0;
+            transform: translateX(150px);
+        }
+        .v-enter-active{
+            transition: all 0.8s ease;
+        }
+
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        .v-leave-active{
+            transition: all 0.8s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 切换方式主要分为2种 -->
+        <!-- 1、使用v-if -->
+        <!-- <a href="" @click.prevent="flag=true">登陆</a> -->
+        <!-- <a href="" @click.prevent="flag=false">注册</a> -->
+        
+        <!-- <login v-if="flag"></login> -->
+        <!-- <register v-else="flag"></register> -->
+
+        <!-- 2、使用Vue的component组件 -->
+        <!-- component是一个占位符，:is属性用来指定要展示组件的名称 -->
+        <!-- <a href="" @click.prevent="comName='login'">登陆</a> -->
+        <!-- <a href="" @click.prevent="comName='register'">注册</a> -->
+        
+        <!-- <component :is="comName"></component> -->
+
+        <!-- 3、组件的动画切换方式 -->
+        <!-- 同样是利用transition -->
+        <!-- 不过这里需要通过model设置切换模式，否则效果牵强 -->
+        <a href="" @click.prevent="comName='login'">登陆</a>
+        <a href="" @click.prevent="comName='register'">注册</a>
+        
+        <transition mode="out-in">
+            <component :is="comName"></component>
+        </transition>
+    </div> 
+</body>
+<script>
+    Vue.component('login',{
+        template:'<h3>登陆组件</h3>'
+    });
+
+    Vue.component('register',{
+        template:'<h3>注册组件</h3>'
+    });
+
+    // 创建Vue实例
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            flag:false,
+            comName:'login'
+        },
+        methods:{
+        }, 
+        components:{
+        }
+    });
+</script>
+</html>
