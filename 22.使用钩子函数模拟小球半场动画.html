@@ -58,9 +58,12 @@
                 done();
             },
             afterEnter(){
-                // 动画完成之后
-                // 指的是enter设置的动画状态和样式全部完成了
+                // 前半场动画完成之后
+                // 指的是enter设置的前半场动画状态和样式全部完成了
                 //完成动画、就将小球隐藏
+
+                // 因为将flag设置为false，从而直接跳过后半场动画
+                // 当第二次点击时，flag由false变为true，从而继续进行前半场动画
                 console.log('afterEnter');
                 this.flag = !this.flag;
             }
