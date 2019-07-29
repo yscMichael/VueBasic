@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+    <!-- 这里要借助于 http-vue-loader -->
+    <!-- 这两个引用也有先后顺序 -->
+    <script src="./lib/httpVueLoader.js"></script>
+</head>
+<body>
+    <div id="app">
+        <my-component></my-component>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        components:{
+            'my-component': httpVueLoader('./vuefile/my-component.vue'),
+        }    
+    });
+</script>
+</html>
