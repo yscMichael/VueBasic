@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">Hello {{who}}</div>
+    <div class="hello">Hello {{who}} {{ title }}</div>
 </template>
 
 <script>
@@ -8,7 +8,10 @@ module.exports = {
         return {
             who: 'world'
         }
-    }
+    },
+    props:[
+        'title'
+    ],
 }
 </script>
 

@@ -11,13 +11,21 @@
     <script src="./lib/httpVueLoader.js"></script>
 </head>
 <body>
+    <!-- 备注: -->
+    <!-- 1、测试怎么加载单独的vue文件 -->
+    <!-- 2、怎么给单独的vue文件赋值 -->
     <div id="app">
-        <my-component></my-component>
+        <my-component :title="test"></my-component>
     </div>
 </body>
 <script>
     var vm = new Vue({
         el:'#app',
+        data() {
+            return {
+                test:'我是测试'
+            }
+        },
         components:{
             'my-component': httpVueLoader('./vuefile/my-component.vue'),
         }    
