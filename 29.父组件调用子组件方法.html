@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.10.js"></script>
+</head>
+<body>
+    <div id="app">
+        这是父组件
+        <input type="button" value="点击调用子组件方法" @click="clickParent">    
+        <com2 ref="mychild"></com2>
+    </div>    
+
+    <template id="tml">
+        <div>
+            <h2>这是子组件</h2>
+        </div>
+    </template>
+</body>
+
+<script>
+    // 创建一个组件模版对象，要想使用还需要重新命名(在components)
+    var com2 = {
+        template: "#tml",
+        methods: {
+            clickChild(){
+                console.log('子组件方法被调用了');
+            }
+        },
+    }
+
+    // 创建Vue实例
+    var vm = new Vue({
+        el: '#app' ,
+        components:{
+            com2
+        },
+        methods:{
+            clickParent(){
+                this.$refs.mychild.clickChild();
+            }
+        }
+    });
+</script>
+</html>

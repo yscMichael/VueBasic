@@ -9,12 +9,16 @@
 </head>
 <body>
     <div id="app">
-
+        <!-- 父组件向子组件传递方法，使用的是事件绑定机制:v-on, 
+        当我们自定义一个事件属性之后，将这个事件属性与父组件绑定
+        此时，子组件通过  this.$emit  就可以调用父类方法了 -->
+        <com2 @func="show"></com2>
     </div>
 
     <template id="tml">
         <div>
            <h1>这是子组件</h1> 
+           <input type="button" value="这是子组件中的按钮 - 点击它,触发父组件传递过来的 func方法" @click="myclick">
         </div>
     </template>
 </body>
@@ -23,19 +27,34 @@
     var com2 = {
         template:'#tml',
         data(){
-            return sonmsg:{name: '小头儿子', age: 6}
-        }
+            return {
+                sonmsg: {name: '小头儿子', age: 6}
+            }
+        },
+        methods: {
+            myclick(){
+                //触发父类的方法、可以传递参数
+                this.$emit('func', this.sonmsg);
+            }
+        },
     }
 
     // 创建Vue实例
     var vm = new Vue({
         el: '#app',
         data: {
+            datamsgFormSon:null
         },
         methods:{
+            // 子组件调用父组件方法，并传递参数
+            show(data){
+                this.datamsgFormSon = data;
+                console.log('子组件---触发--父组件方法');
+                console.log(this.datamsgFormSon);
+            }
         }, 
         components:{
-            comc
+            com2
         }
     });
 </script>
