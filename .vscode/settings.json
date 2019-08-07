@@ -1,5 +1,8 @@
 {
     "workbench.editor.closeEmptyGroups": false,
     "emmet.triggerExpansionOnTab": true,
-    "files.associations": {"*.js": "html"}
+    "files.associations": {
+        "*.js": "html"
+    },
+    "liveServer.settings.port": 50140
 }
